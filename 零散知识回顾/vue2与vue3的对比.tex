@@ -1,0 +1,71 @@
+Vue2.x与Vue3的对比
+
+Vue2                                Vue3
+
+1、生命周期
+beforeCreate                        setup
+created                             setup
+beforeMount                         onBeforeMounte
+mounted                             onMounted
+beforeUpdate                        onBeforeUpdate
+updated                             onUpdated
+beforeDestory                       onBeforeUnmount
+destoryed                           onUnmounted
+errCaptured                         onErrorCaptured
+
+2.1、使用proxy 代替defineProperty
+vue2对数组对象无法深层监听，因为每次渲染都是将data里的数据通过definProperty进行响应式或者双向绑定上，
+之前没有后加的属性是不会被绑定上的，也就不会触发更新渲染
+vue3使用proxy，不需要关心里面有什么属性，proxy有13种配置项，可以做到更细致，
+
+2.2、两者兼容性
+vue2.x之所以只能兼容到IE8就是因为defineProperty无法兼容IE8，其它浏览器也会存在轻微兼容问题
+vue3中proxy的话除了IE,其它浏览器都兼容，说明vue3直接放弃了IE的兼容，个人感觉IE已经没人用了
+
+2.3、Diff算法的提升
+vue2.x以往的渲染策略是提供类似于HTML的模板语法，但是，它是将模板编译成渲染函数来返回虚拟DOM。Vue框架通过递归遍历
+两个虚拟DOM，并比对每个节点上的每个属性，来确定实际DOM的哪些部分需要更新。
+
+vue3中，编译器和运行时需要协同工作，大大提升了内存使用率减少垃圾回收、减少了DOM操作的开销、减少CPU占用率
+
+
+2.4、typescript的支持
+vue2中使用的都是js，它本身没有类型系统这个概念，typescript异常火爆，它的崛起是有原因的。因为对于规模很大的项目，没有类型声明，
+后期维护和代码的阅读都是很头疼的事，所以程序猿还是很迫切的需要vue支持ts
+
+2.4.1-如何实现
+最终Vue借鉴了react hook实现了更自由的编程方式，提出了Composition API、Composition API不需要通过指定一长串选项来定义组件，
+而是允许用户像写函数一样自由地表达，组合和重用有状态的组件逻辑，同时提出出色的ts支持
+
+
+2.5、打包体积变化
+vue2.x打包会随着依赖包和框架特性的增多，有时候不必要的，未使用的代码文件都被打包进去了，所以后期项目大了，打包文件会特别多还很大
+vue3中，通过大多数全局API和内部程序移动到javascript 的module.exports属性上，这在现代模式下的module bundler能够静态地分析
+模块依赖关系，并删除与未使用的module.exports 属性相关的代码。只有在模板中实际使用某一个特性时，该代码才导入该特性的帮助程序
+
+2.6、其它API和功能的改动
+vue-cli 从v4.5.0开始提供Vue3预设
+vue-router 4.0开始提供了vue3支持
+vuex 4.0提供vue3支持，API与vue2.x基本相同
+
+2.7、组件API的使用
+setup替代了以前的beforeCreate和created，类似于初始化的功能
+
+2.8、ref、toRef、toRefs
+ref: 就是简单的响应式变量
+toRef: 就是把不是响应的变量变为响应变量
+toRefs: 就是把reactive修饰的响应对象分解为单个的ref响应变量
+
+2.9、watch、watchEffect
+watch第一个参数是被监听的变量，第二个是执行的回调函数
+watchEffect里面的变量发生变化都会执行，并且第一次渲染会立即执行，没有变化前后的参数，无法监听整个reactive
+watch可以直接监听ref和reactive绑定的对象，watchEffect不可以，（ref的值要.value，reactive的值要具体到
+内部属性），只会执行第一次
+
+3.0、函数组件，
+所有函数都有props、context参数
+
+3.1、vue3对打包体积做了深入优化，体积比原来小了一半，vue3不需要diff递归，理论上更快
+
+落后就会被淘汰，升级迭代是家常便饭，无须抵触新技术，最好的方式就是拥抱新技术，只有这样
+才不至于在前端的浪潮中被淘汰

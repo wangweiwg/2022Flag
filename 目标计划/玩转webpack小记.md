@@ -6,8 +6,8 @@
 * webpack4里面讲webpack的内核与webpack-cli进行了分离
 
 ### 第二章：webpack基础用法
-* entry
-* output
+* entry：指定打包的入口，单入口是一个字符串，多入口是一个对象k-v对
+* output：指定打包输出的目录，
 
 
 ### 第三章：webpack进阶用法

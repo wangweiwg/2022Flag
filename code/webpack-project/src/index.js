@@ -1,3 +1,3 @@
 import { helloworld } from './helloworld.js'
 
-document.write(helloworld())
+document.write(helloworld('Hello Webpack'))

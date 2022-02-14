@@ -21,6 +21,12 @@
 * 解析ES6语法：babel-loader
 * 解析React JSX：@babel/preset-react
 * 解析css文件：css-loader
+* 解析图片和字体：file-loader，可以处理jpg、jpeg、png、gift、webp等格式图片
+* 解析图片和字体：url-loader也可以处理图片和字体，可以设置较小资源自动base64
+* webpack文件监听：发现源代码发生变化时，自动重新构建输出的文件
+  开启监听有两种模式：带上--watch，设置watch为true
+* 文件监听的原理：轮训判断文件的最后编辑时间是否变化。某一个文件发生变化，并不会立刻告诉监听者，而是先缓存起来，等aggregateTimeout。可以设置ignore设置node_modules进行性能优化
+* webpack中的热更新及其原理：webpack-dev-server，Webpack Compile将JS编译成Bundle，HMR Server将热更新的文件输出给HMR Runtime，Bundle Server提供文件在浏览器的访问，HMR Runtime会被注入带浏览器更新文件的变化
 
 
 ### 第三章：webpack进阶用法

@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     entry: {
@@ -13,17 +14,43 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /.js$/,
                 use: 'babel-loader'
             },
             {
-                test: /\.less$/,
+                test: /.less$/,
                 use: [
                     'style-loader',
                     'css-loader',
                     'less-loader'
                 ]
+            },
+            // {
+            //     test: /.(png|jpg|gift|jpeg|webp)$/,
+            //     use: 'file-loader'
+            // },
+            {
+                test: /.(png|jpg|gift|jpeg|webp)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 40960
+                        }
+                    }
+                ]
             }
         ]
+    },
+    devServer: {
+        port: 3000,
+        static: {
+            directory: path.join(__dirname, '/'),
+            publicPath: '/',
+            serveIndex: true,
+            watch: {
+                ignore: './node_modules/'
+            }
+        },
     }
 }

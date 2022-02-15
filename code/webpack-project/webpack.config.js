@@ -42,15 +42,20 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ],
     devServer: {
         port: 3000,
-        static: {
-            directory: path.join(__dirname, '/'),
-            publicPath: '/',
-            serveIndex: true,
-            watch: {
-                ignore: './node_modules/'
-            }
-        },
+        static: './',
+        hot: true
+        // static: {
+        //     directory: path.join(__dirname, '/'),
+        //     publicPath: '/',
+        //     serveIndex: true,
+        //     watch: {
+        //         ignore: './node_modules/'
+        //     }
+        // },
     }
 }

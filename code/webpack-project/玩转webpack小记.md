@@ -28,5 +28,12 @@
 * 文件监听的原理：轮训判断文件的最后编辑时间是否变化。某一个文件发生变化，并不会立刻告诉监听者，而是先缓存起来，等aggregateTimeout。可以设置ignore设置node_modules进行性能优化
 * webpack中的热更新及其原理：webpack-dev-server，Webpack Compile将JS编译成Bundle，HMR Server将热更新的文件输出给HMR Runtime，Bundle Server提供文件在浏览器的访问，HMR Runtime会被注入带浏览器更新文件的变化
 
+* 文件指纹：打包输出的文件名的后缀，可以做版本管理。有三种形式：Hash、Chunkhash、Contenthash
+* mini-css-extract-plugin与style-loader是互斥的，它是提取css的
+* html、css、js代码压缩：uglifyjs-webpack-plugin来实现的
+* optimize-css-assets-webpack-plugin： css的压缩
+* html-webpack-plugin设置压缩参数
+* webpack可以通过--config参数来指定webpack打包的文件，用来区分dev、pro环境中不同的打包
+
 
 ### 第三章：webpack进阶用法

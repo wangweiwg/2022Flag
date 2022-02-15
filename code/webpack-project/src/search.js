@@ -7,7 +7,7 @@ class Search extends React.Component {
     render() {
         return (
             <div className='search-text'>
-                <p>搜索内容区域，为什么没有变化呢??</p>
+                <p>搜索内容区域，hahah</p>
                 <img src={ img } />
             </div>
         )

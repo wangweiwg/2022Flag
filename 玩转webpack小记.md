@@ -32,8 +32,15 @@
 * mini-css-extract-plugin与style-loader是互斥的，它是提取css的
 * html、css、js代码压缩：uglifyjs-webpack-plugin来实现的
 * optimize-css-assets-webpack-plugin： css的压缩
-* html-webpack-plugin设置压缩参数
+* html-webpack-plugin设置压缩参数，一个entry对应一个html-webpack-plugin
 * webpack可以通过--config参数来指定webpack打包的文件，用来区分dev、pro环境中不同的打包
 
-
 ### 第三章：webpack进阶用法
+* clean-webpack-plugin自动清除构建目录
+* postcss-loader和autoprefixer：PostCSS插件autoprefixer自动补齐css3前缀
+* px2rem-loader：移动端css自动px转换成rem(font-size of the root element)
+* 静态资源内联：raw-loader，html-webpack-plugin使用的模板是ejs
+* 多页面应用打包方案：glob获取src目录下面规定的层级关系
+
+* sourcemap，通过devtools来设置不同的值
+* 提取页面公共资源：使用html-webpack-externals-pluin插件将react、react-dom基础包通过cdn引入，不打入bundle中。还可以利用split-chunks-plugin（webpack4内置的，之前使用common-chunk-plugin）进行公共脚本分离

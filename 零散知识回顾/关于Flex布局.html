@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flext布局</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: row-reverse;
+            flex-wrap: wrap-reverse;
+        }
+        .box {
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            background-color: aqua;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .box1 {
+            width: 160px;
+            background-color: bisque;
+        }
+        .box2 {
+            background-color: blue;
+        }
+        .box3 {
+            background-color: burlywood;
+        }
+        .box4 {
+            background-color: yellow;
+        }
+        .box5 {
+            background-color: yellowgreen;
+        }
+        .box6 {
+            background-color: purple;
+        }
+    </style>
+</head>
+<body>
+    <div class="box box1">11111111111111</div>
+    <div class="box box2">22222222</div>
+    <div class="box box3">33333</div>
+    <div class="box box4">44444</div>
+    <div class="box box5">55555</div>
+    <div class="box box6">66666</div>
+
+    <script type="text/javascript">
+        // 设置Flext布局后，子元素的clear、float、vertical-align将失效
+        // 采用Flex布局的元素称为容器，它额所有子元素称为容器成员，简称flex item
+        // 容器默认存在两个轴：水平的主轴和垂直的交叉轴，主轴的开始叫main start,结束叫main end；交叉轴的开始叫cross start，结束叫end cross。默认沿主轴排列
+        // 容器的属性一共6个：flex-direction、flex-wrap、flex-flow、justify-content、align-items、aligin-content
+        // 容器属性：
+        // flex-direction: 主轴的方向，默认水平（row、row-reverse、column、column-reverse）
+        // * row: 主轴为水平方向，起点在左端，
+        // * row-reverse: 主轴为水平方向，起点在右端
+        // * column: 主轴为垂直方向，起点在上沿
+        // * column-reverse: 主轴为垂直方向，起点在下沿
+        // flex-wrap: 默认都排列在一条轴线上，flex-wrap规定一条轴线排列不下时怎么展示（nowrap、wrap、wrap-reverse）
+        // * nowrap: 默认不换行,如果每个item的内容分一致，会均分使每一个item占比一样，如果item里面的内容有多有少，会根据内容多少自动分配占比情况
+        // * wrap: 换行，第一行在上方,根据item大小，排列不下的自动换到下一行排列
+        // * wrap-reverse: 第一行在下方
+
+    </script>
+</body>
+</html>

@@ -46,4 +46,9 @@
 
 * tree shaking(摇树优化)：1个模块可能有多个方法，只要其中某一个方法使用到了，整个文件都会被打包到bundle里面去，tree shaking就是只把用到的方法打包到bundle中，没用到的方法会在uglify阶段被擦除掉。使用：webpack默认支持，在.babelrc里面设置modules: false即可。production mode的情况下默认开启。要求必须是es6语法，CJS的方法不支持。
 
-* Scope Hoisting：production模式下默认开启。构建后的代码存在大量闭包代码包裹，导致体积增大，运行代码时创建的函数作用域越多，内存开销变大。（模块初始化函数）
+* Scope Hoisting：production模式下默认开启。构建后的代码存在大量闭包代码包裹，导致体积增大，运行代码时创建的函数作用域越多，内存开销变大。（模块初始化函数）。原理是将所有模块的代码按照引用顺序放在一个函数作用域里，然后适当的重命名一些变量以防止变量名冲突。通过scope hoisting可以减少函数声明代码和内存开销。
+
+* 代码分割：split-chunks和动态import。抽离相同代码到一个分享块，脚本懒加载使得初始化下载的代码更小
+  CommonJS通过require.ensure，es6使用动态import(@babel/plugin-syntax-dynamic-import)，在.babelrc中配置plugins即可。动态import时返回的是Promise对象
+
+* 在webpack中使用ESLint：可以基于eslint:recommend配置并改进。和CI/CD系统集成，和webpack集成

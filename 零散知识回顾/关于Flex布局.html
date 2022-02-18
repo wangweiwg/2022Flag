@@ -14,8 +14,10 @@
             width: 100vw;
             height: 100vh;
             display: flex;
-            flex-direction: row-reverse;
-            flex-wrap: wrap-reverse;
+            /* flex-direction: row-reverse; */
+            /* flex-wrap: wrap-reverse; */
+            justify-content: center;
+            align-items: center;
         }
         .box {
             width: 80px;
@@ -25,9 +27,10 @@
             font-size: 20px;
             font-weight: 600;
             text-align: center;
+            box-sizing: border-box;
         }
         .box1 {
-            width: 160px;
+            /* width: 160px; */
             background-color: bisque;
         }
         .box2 {
@@ -48,17 +51,17 @@
     </style>
 </head>
 <body>
-    <div class="box box1">11111111111111</div>
-    <div class="box box2">22222222</div>
-    <div class="box box3">33333</div>
-    <div class="box box4">44444</div>
+    <div class="box box1">11111</div>
+    <div class="box box2">22222</div>
+    <!-- <div class="box box3">33333</div> -->
+    <!-- <div class="box box4">44444</div>
     <div class="box box5">55555</div>
-    <div class="box box6">66666</div>
+    <div class="box box6">66666</div> -->
 
     <script type="text/javascript">
-        // 设置Flext布局后，子元素的clear、float、vertical-align将失效
-        // 采用Flex布局的元素称为容器，它额所有子元素称为容器成员，简称flex item
-        // 容器默认存在两个轴：水平的主轴和垂直的交叉轴，主轴的开始叫main start,结束叫main end；交叉轴的开始叫cross start，结束叫end cross。默认沿主轴排列
+        // 设置Flex布局后，子元素的clear、float、vertical-align将失效
+        // 采用Flex布局的元素称为容器，它的所有子元素称为容器成员，简称flex item
+        // 容器默认存在两个轴：水平的主轴和垂直的交叉轴，主轴的开始叫main start,结束叫main end；交叉轴的开始叫cross start，结束叫cross end。默认沿主轴排列
         // 容器的属性一共6个：flex-direction、flex-wrap、flex-flow、justify-content、align-items、aligin-content
         // 容器属性：
         // flex-direction: 主轴的方向，默认水平（row、row-reverse、column、column-reverse）
@@ -67,10 +70,23 @@
         // * column: 主轴为垂直方向，起点在上沿
         // * column-reverse: 主轴为垂直方向，起点在下沿
         // flex-wrap: 默认都排列在一条轴线上，flex-wrap规定一条轴线排列不下时怎么展示（nowrap、wrap、wrap-reverse）
-        // * nowrap: 默认不换行,如果每个item的内容分一致，会均分使每一个item占比一样，如果item里面的内容有多有少，会根据内容多少自动分配占比情况
+        // * nowrap: 默认不换行,如果每个item的内容部分一致，会均分使每一个item占比一样，如果item里面的内容有多有少，会根据内容多少自动分配占比情况
         // * wrap: 换行，第一行在上方,根据item大小，排列不下的自动换到下一行排列
         // * wrap-reverse: 第一行在下方
-
+        // flex-flow: 是flex-direction和flex-wrap的简写形式，默认是 row nowrap
+        // justify-content: 定义了项目在主轴上的对齐方式
+        // * flex-start: 默认左对齐
+        // * flex-end: 右对齐
+        // * center: 居中
+        // * space-between: 两端(左右)对齐，项目之间的间隔都相等
+        // * space-around: 每个项目两侧的间隔相等。所有项目之间的间隔比项目与边框的间隔大一倍
+        // align-items: 定义项目在交叉轴上如何对齐
+        // * flex-start:交叉轴的起点对齐
+        // * flex-end: 交叉轴的终点对齐
+        // * center: 交叉轴的中点对齐
+        // * stretch(默认值): 如果项目未设置高度或auto，将沾满整个容器的高度
+        // * baseline: 项目的第一行文字的基线对齐
+        // align-content: 定义了多根轴线的对齐方式，如果只有一个轴线，不起作用
     </script>
 </body>
 </html>

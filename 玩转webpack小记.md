@@ -52,3 +52,5 @@
   CommonJS通过require.ensure，es6使用动态import(@babel/plugin-syntax-dynamic-import)，在.babelrc中配置plugins即可。动态import时返回的是Promise对象
 
 * 在webpack中使用ESLint：可以基于eslint:recommend配置并改进。和CI/CD系统集成，和webpack集成
+
+* webpack打包组件和基础库

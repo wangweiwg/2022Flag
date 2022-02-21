@@ -15,14 +15,14 @@
             height: 100vh;
             display: flex;
             /* flex-direction: row-reverse; */
-            /* flex-wrap: wrap-reverse; */
-            justify-content: center;
+            flex-wrap: wrap;
+            justify-content: space-around;
             align-items: center;
         }
         .box {
             width: 80px;
             height: 80px;
-            line-height: 80px;
+            /* line-height: 80px; */
             background-color: aqua;
             font-size: 20px;
             font-weight: 600;
@@ -30,13 +30,16 @@
             box-sizing: border-box;
         }
         .box1 {
-            /* width: 160px; */
             background-color: bisque;
         }
         .box2 {
+            height: 50px;
+            line-height: 50px;
             background-color: blue;
         }
         .box3 {
+            height: 100px;
+            line-height: 100px;
             background-color: burlywood;
         }
         .box4 {
@@ -48,15 +51,33 @@
         .box6 {
             background-color: purple;
         }
+
+        #container {
+            width: 100%;
+            height: 100%;
+            /* display: flex; */
+        }
     </style>
 </head>
 <body>
-    <div class="box box1">11111</div>
+    <!-- <div class="box box1">11111</div>
     <div class="box box2">22222</div>
-    <!-- <div class="box box3">33333</div> -->
+    <div class="box box3">33333</div> -->
     <!-- <div class="box box4">44444</div>
     <div class="box box5">55555</div>
     <div class="box box6">66666</div> -->
+
+    <div id="container">
+        <div class="left"></div>
+        <div class="center"></div>
+        <div class="right"></div>
+        <!-- <div class="right">
+            <div class="header"></div>
+            <div class="content"></div>
+        </div>
+        <div class="menu"></div>
+        <div class="tools"></div> -->
+    </div>
 
     <script type="text/javascript">
         // 设置Flex布局后，子元素的clear、float、vertical-align将失效
@@ -84,9 +105,17 @@
         // * flex-start:交叉轴的起点对齐
         // * flex-end: 交叉轴的终点对齐
         // * center: 交叉轴的中点对齐
-        // * stretch(默认值): 如果项目未设置高度或auto，将沾满整个容器的高度
+        // * stretch(默认值): 如果项目未设置高度或auto，将占满整个容器的高度
         // * baseline: 项目的第一行文字的基线对齐
         // align-content: 定义了多根轴线的对齐方式，如果只有一个轴线，不起作用
+
+        // 项目的属性
+        // order
+        // flex-grow
+        // flex-shrink
+        // flex-basis
+        // flex
+        // align-self
     </script>
 </body>
 </html>

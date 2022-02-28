@@ -40,7 +40,6 @@ class Compiler {
         this.hooks.run.call()
         // 获取入口配置对象
         const entry = this.getEntry()
-        console.log('entry---', entry)
         // 编译入口文件
         this.buildEntryModule(entry)
     }
@@ -70,6 +69,7 @@ class Compiler {
         Object.keys(entry).forEach((entryName) => {
             const entryPath = entry[entryName]
             const entryObj = this.buildModule(entryName, entryPath)
+            console.log('entryObj---', entryObj)
             this.entries.add(entryObj)
         })
     }
@@ -83,7 +83,10 @@ class Compiler {
     // 如果该入口文件存在依赖的模块，递归buildModule方法进行模块编译
     buildModule(moduleName, modulePath) {
         // 1. 读取文件原始代码
-        const originSourceCode = ((this.originSourceCode = fs.readFileSync(modulePath)), 'utf-8')
+        const originSourceCode = (this.originSourceCode = fs.readFileSync(
+          modulePath,
+          'utf-8'
+        ));
         // moduleCode为修改后的代码
         this.moduleCode = originSourceCode
         // 2. 调用loader进行处理
@@ -166,6 +169,12 @@ class Compiler {
       const { code } = generator(ast);
       // 为当前模块挂载新的生成的代码
       module._source = code;
+      // 递归依赖深度遍历 存在依赖模块则加入
+      module.dependencies.forEach((dependency) => {
+        const depModule = this.buildModule(moduleName, dependency);
+        // 将编译后的任何依赖模块对象加入到modules对象中去
+        this.modules.add(depModule);
+      });
       // 返回当前模块对象
       return module
     }

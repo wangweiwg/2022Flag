@@ -1,7 +1,7 @@
 class PluginB {
     apply(compiler) {
       compiler.hooks.done.tap('Plugin B', () => {
-        console.log('PluginB');
+        console.log('编译结束后，注册PluginB');
       });
     }
 }

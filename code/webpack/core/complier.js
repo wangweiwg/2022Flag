@@ -3,9 +3,9 @@ const fs = require('fs');
 const parser = require('@babel/parser');
 const traverse = require('@babel/traverse').default;
 const generator = require('@babel/generator').default;
+const t = require('@babel/types');
 const { SyncHook } = require('tapable');
-const { toUnixPath } = require('../utils');
-const { tryExtensions } = require('../utils/tryExtensions');
+const { tryExtensions, toUnixPath, getSourceCode } = require('./utils/index');
 
 class Compiler {
     constructor(options) {
@@ -42,6 +42,8 @@ class Compiler {
         const entry = this.getEntry()
         // 编译入口文件
         this.buildEntryModule(entry)
+        // 导出列表;之后将每个chunk转化成为单独的文件加入到输出列表assets中
+        this.exportFile(callback)
     }
 
     // 获取入口文件路径
@@ -67,10 +69,11 @@ class Compiler {
     // 执行编译入口文件
     buildEntryModule(entry) {
         Object.keys(entry).forEach((entryName) => {
-            const entryPath = entry[entryName]
-            const entryObj = this.buildModule(entryName, entryPath)
-            console.log('entryObj---', entryObj)
+            const entryPath = entry[entryName];
+            const entryObj = this.buildModule(entryName, entryPath);
             this.entries.add(entryObj)
+            // 根据当前入口文件和模块的相互依赖关系，组装成为一个个包含当前入口所有依赖模块的chunk
+            this.buildUpChunk(entryName, entryObj)
         })
     }
 
@@ -93,7 +96,7 @@ class Compiler {
         this.handleLoader(modulePath)
         // 3. 调用webpack 进行模块编译 获得最终的module对象
         const module = this.handleWebpackCompiler(moduleName, modulePath)
-        // 4. 返回对应module
+        // // 4. 返回对应module
         return module
     }
 
@@ -119,6 +122,7 @@ class Compiler {
             const loaderFn = require(matchLoaders[i])
             // 通过loader同步处理我的每一次编译的moduleCode
             this.moduleCode = loaderFn(this.moduleCode)
+            
           }
         })
     }
@@ -154,14 +158,24 @@ class Compiler {
               moduleDirName
             );
             // 生成moduleId - 针对于跟路径的模块ID 添加进入新的依赖模块路径
-            const moduleId =
-              './' + path.posix.relative(this.rootPath, absolutePath);
+            const moduleId = './' + path.posix.relative(this.rootPath, absolutePath);
             // 通过babel修改源代码中的require变成__webpack_require__语句
             node.callee = t.identifier('__webpack_require__');
             // 修改源代码中require语句引入的模块 全部修改变为相对于跟路径来处理
             node.arguments = [t.stringLiteral(moduleId)];
-            // 为当前模块添加require语句造成的依赖(内容为相对于根路径的模块ID)
-            module.dependencies.add(moduleId);
+            // 转化为ids的数组 好处理
+            const alreadyModules = Array.from(this.modules).map((i) => i.id);
+            if (!alreadyModules.includes(moduleId)) {
+              // 为当前模块添加require语句造成的依赖(内容为相对于根路径的模块ID)
+              module.dependencies.add(moduleId);
+            } else {
+              // 已经存在的话 虽然不进行添加进入模块编译 但是仍要更新这个模块依赖的入口
+              this.modules.forEach((value) => {
+                if (value.id === moduleId) {
+                  value.name.push(moduleName);
+                }
+              });
+            }
           }
         },
       });
@@ -177,6 +191,58 @@ class Compiler {
       });
       // 返回当前模块对象
       return module
+    }
+
+    // 根据入口文件和依赖模块组装chunks
+    buildUpChunk(entryName, entryObj) {
+      const chunk = {
+        name: entryName, // 每一个入口文件作为一个chunk
+        entryModule: entryObj, // entry编译后的对象
+        modules: Array.from(this.modules).filter((i) =>
+          i.name.includes(entryName)
+        ), // 寻找与当前entry有关的所有module
+      }
+      // 将chunk添加到this.chunks中去
+      this.chunks.add(chunk)
+    }
+
+    // 将chunk加入输出列表中去
+    exportFile(callback) {
+      const output = this.options.output;
+      // 根据chunks生成assets内容
+      this.chunks.forEach((chunk) => {
+        console.log('chunk---', chunk)
+        const parseFileName = output.filename.replace('[name]', chunk.name);
+        console.log('parseFileName----', parseFileName)
+        // assets中 { 'main.js': '生成的字符串代码...' }
+        this.assets[parseFileName] = getSourceCode(chunk);
+      });
+      // 调用Plugin emit钩子
+      this.hooks.emit.call();
+      // 先判断目录是否存在 存在直接fs.write 不存在则首先创建
+      if (!fs.existsSync(output.path)) {
+        fs.mkdirSync(output.path);
+      }
+      // files中保存所有的生成文件名
+      this.files = Object.keys(this.assets);
+      // 将assets中的内容生成打包文件 写入文件系统中
+      Object.keys(this.assets).forEach((fileName) => {
+        const filePath = path.join(output.path, fileName);
+        fs.writeFileSync(filePath, this.assets[fileName]);
+      });
+      // 结束之后触发钩子
+      this.hooks.done.call();
+      callback(null, {
+        toJson: () => {
+          return {
+            entries: this.entries,
+            modules: this.modules,
+            files: this.files,
+            chunks: this.chunks,
+            assets: this.assets,
+          };
+        },
+      });
     }
 
 }

@@ -1,3 +1,5 @@
+本项目旨在通过实现一个mini版本的webpack, 达到对webpack核心编译原理的理解
+
 初始化参数：通常有两种方式传递打包参数
 * cli命令行传递参数（webpack --mode=production）
 * webpack.config.js传递参数

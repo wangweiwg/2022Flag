@@ -30,6 +30,7 @@ module.exports = {
           // 使用自己loader有三种方式 这里仅仅是一种
           path.resolve(__dirname, '../loaders/loader-1.js'),
           path.resolve(__dirname, '../loaders/loader-2.js'),
+          path.resolve(__dirname, '../loaders/loader-3.js'),
         ],
       },
     ],

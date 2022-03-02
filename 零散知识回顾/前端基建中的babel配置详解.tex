@@ -1,0 +1,27 @@
+参考文章地址：https://juejin.cn/post/7025237833543581732
+
+以webpack配置为例：
+主要涉及到三个相关插件：
+* babel-loader：识别配置文件和接受对应参数的函数，
+* babel-core：babel编译过程中的核心库，将代码进行词法分析--语法分析--语义分析过程从而生成AST抽象语法树，
+  从而对树操作后再通过编译成为新的代码。babel-core通过transform方法将我们的代码进行编译。
+* babel-preset-env：告诉babel以什么样的规则进行代码转换
+
+在 webpack 中 loader 的本质就是一个函数，接受我们的源代码作为入参同时返回新的内容
+
+
+babel相关polyfill内容：
+* 最新ES语法，比如：箭头函数、let/const
+* 最新ES API，比如： Promise
+* 最新ES实例/静态方法，比如：String.prototype.include
+babel-preset-env 仅仅只会转化最新的es语法，并不会转化对应的API和实例方法，比如 ES 6中的Array.from静态方法。
+babel是不会转译这个方法的，如果想在低版本浏览器中识别并且运行Array.form方法达到我们的预期就需要额外引入 polyfill
+进行在Array上添加实例这个方法。其实可以稍微简单总结一下，语法层面的转化preset-env完全可以胜任。但是一些内置方法模块，
+仅仅通过preset-env的语法转化是无法进行识别转化的，所以就需要一系列类似”垫片“的工具进行补充实现这部分内容的低版本代码
+实现。这就是所谓的polyfill的作用。
+
+针对于polyfill方法的内容，babel中涉及两个方面来解决：
+@babel/polyfill：通过babelPolyfill通过往全局对象上添加属性以及直接修改内置对象的Prototype上添加方法实现polyfill。造成全局污染
+@babel/runtime
+@babel/plugin-transform-runtime
+

@@ -21,29 +21,20 @@
 // 输出: 0
 
 var searchInsert = function(nums, target) {
-    if (nums[0] > target) return 0 
-    if (nums[nums.length - 1] < target) return nums.length
     let left = 0;
     let right = nums.length - 1;
-    while (left <= right) {
-        let mid = Math.floor((left + right) /2 );
-        // 中间值
+    while (left < right) {
+        let mid = Math.floor((left + right) / 2);
         if (nums[mid] == target) {
             return mid;
-        }
-        // 往左边算
-        if (nums[mid] > target && nums[mid - 1] > target) {
-            right = mid - 1;
-        } else if (nums[mid] > target) {
-            return mid
-        }
-        // 往右边算
-        if (nums[mid] < target && nums[mid + 1] < target)  {
+        } else if (nums[mid] < target) {
+            // 右移
             left = mid + 1;
         } else {
-            return mid + 1;
+            right = mid - 1;
         }
     }
+    return left;
 };
 
-const res = searchInsert([1, 3, 5, 6], 4);
+const res = searchInsert([1, 3, 5, 6], 2);

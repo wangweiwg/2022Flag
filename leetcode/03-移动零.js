@@ -9,7 +9,23 @@
 // 输入: nums = [0]
 // 输出: [0]
 
+// sort排序法
+// const moveZeroes = (nums) => {
+//     return nums.sort((a, b) => b == 0 ? -1 : 1);
+// }
+
+// 第二种方法:
 const moveZeroes = (nums) => {
-    return nums.sort((a, b) => b == 0 ? -1 : 1);
+    let j = 0;
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] != 0) {
+            nums[j++] = nums[i];
+        }
+    }
+    for (let k = j; k < nums.length; k++) {
+        nums[k] = 0
+    }
+    return nums;
 }
+
 console.log(moveZeroes([0,1,0,3,12]))

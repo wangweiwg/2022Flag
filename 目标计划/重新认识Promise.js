@@ -74,9 +74,74 @@ new Promise((resolve, reject) => {
 // Promise.all()
 // 用于将多个Promise实例，包装成一个新的Promise实例
 // 接受数组作为参数，只有所有的参数成员状态都变为fulfilled时，最终才会变为fufilled状态，以数组的形式返回
-// 只要有一个参数状态变为rejected，最终状态就会变为rejected
+// 只要有一个参数状态变为rejected，最终状态就会变为rejected，直接抛出异常
 // 如果参数实例定义了catch方法，那么报错时不会走Promise.all()的catch方法
 
 // Promise.race()
 // 将多个Promise实例包装成一个新的Promise实例
 // 只要参数实例中有一个率先改变状态，最终状态就跟着改变。并且返回率先改变的值
+
+// Promise.allSettled()
+// 有时候，我们希望等到一组异步操作都结束了，不管每一个操作是成功还是失败，再进行下一步操作。
+// 但是，现有的Promise方法很难实现这个要求。
+const p3 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('p3');
+    }, 2000)
+})
+
+const p4 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('p4');
+    }, 4000)
+})
+
+const p5 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        reject('p5');
+    }, 6000)
+})
+
+// 只有p3、p4、p5都成功了才会成功
+// Promise.all([p3, p4, p5]).then((res) => {
+//     console.log('rees---all--', res)
+// }).catch(err => {
+//     console.log('出现异常了')
+// })
+
+// ES2020引入了 Promise.allSettled()方法，用来确定一组异步操作是否都结束了。
+Promise.allSettled([p3, p4, p5]).then(res => {
+    console.log('都执行完了---', res)
+})
+
+
+// Promise.any()
+// ES2021引入了Promise.any()方法。该方法接受一组Promise实例作为参数，包装成一个新的Promise实例返回
+// 只要参数实例有一个变成fulfilled状态，包装实例就会变成fulfilled状态，如果所有参数实例都变成rejected状态，包装实例就会变成rejected状态。
+// Promise.any()跟Promise.race()方法很像，只有一点不同，就是Promise.any()不会因为某一个Promise变成rejected状态而结束。
+// 必须等到所有的Promise实例都变成rejected状态才会结束
+
+
+// Promise.resolve()
+// 将现有对象转为Promise对象
+// 立即resolve()的Promise对象，是在本轮事件循环的结束时执行，而不是在下一轮事件循环的开始时
+
+
+// Promise.reject()
+// 返回一个新的Promise实例，该实例的状态为rejected
+
+// 应用
+// 图片加载
+const preloadImage = (path) => {
+    return new Promise((resolve, reject) => {
+        const img = new Image()
+        img.onload = resolve
+        img.onerror = reject
+        img.src = path
+    })
+}
+
+
+// Promise.try()
+// 开发中会遇到不知道或者不想区分，函数是同步函数还是异步函数，但是想用Promise来处理它。
+// 可以使用then方法指定下一步流程，用catch处理函数抛出的异常，可以使用Promise.try()

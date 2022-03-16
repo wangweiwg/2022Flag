@@ -58,3 +58,25 @@ new Promise((resolve, reject) => {
 }).then((res) => {
     console.log('第二步结果是---', res)
 })
+
+// Promise.prototype.catch()
+// Promise内部的错误不会影响到外部代码的执行，因此需要使用catch来捕获异常
+// 不过nodejs有个unhandledRejection事件，专门监听未捕获的reject错误
+// process.on('unhandledRejection', function(err, p) { throw err })
+
+
+// Promise.prototype.finally()
+// finally()方法用于指定不管Promise对象最后状态如何，都会执行的操作。改方法是ES2018引入标准的。
+// finally里面的操作，与状态无关，不依赖于Promise的执行结果
+// finally本质上是then方法的特例。
+
+
+// Promise.all()
+// 用于将多个Promise实例，包装成一个新的Promise实例
+// 接受数组作为参数，只有所有的参数成员状态都变为fulfilled时，最终才会变为fufilled状态，以数组的形式返回
+// 只要有一个参数状态变为rejected，最终状态就会变为rejected
+// 如果参数实例定义了catch方法，那么报错时不会走Promise.all()的catch方法
+
+// Promise.race()
+// 将多个Promise实例包装成一个新的Promise实例
+// 只要参数实例中有一个率先改变状态，最终状态就跟着改变。并且返回率先改变的值

@@ -7,7 +7,6 @@
 
 .header {
     height: 60px;
-    line-height: 60px;
     background-color: #20232a;
     color: #fff;
     font-size: 20px;
@@ -16,6 +15,11 @@
 .footer {
     display: flex;
     height: 100%;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
 }
 
 .ant-layout {

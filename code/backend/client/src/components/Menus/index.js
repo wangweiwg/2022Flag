@@ -4,7 +4,7 @@ import {
   DesktopOutlined,
   PieChartOutlined,
 } from '@ant-design/icons';
-import styles from './index.module.css';
+import styles from './index.module.scss';
 
 // const { SubMenu } = Menu;
 

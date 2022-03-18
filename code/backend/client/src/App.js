@@ -1,17 +1,15 @@
-// import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Menus from './components/Menus/index';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org">
-          Hello React
-        </a>
-      </header>
+    <div className="app">
+      <header className='header'>头部</header>
+      <footer className='footer'>
+        <Menus />
+        <div className='container'>内容部分</div>
+      </footer>
     </div>
   );
 }

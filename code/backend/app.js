@@ -2,6 +2,8 @@ const path = require('path');
 const Koa = require('koa');
 const static = require('koa-static');
 
+const port = 5000;
+
 const app = new Koa();
 
 // 静态资源目录对于相对入口文件index.js的路径
@@ -16,6 +18,6 @@ app.use( async ( ctx ) => {
     ctx.body = 'hello world'
 })
 
-app.listen(3000, () => {
-    console.log('server listen at 3000 port');
+app.listen(port, () => {
+    console.log(`server listen at ${port} port`);
 })

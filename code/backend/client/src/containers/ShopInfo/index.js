@@ -9,4 +9,4 @@ const ShopInfo = () => {
     )
 }
 
-export default <ShopInfo />;
+export default ShopInfo;

@@ -9,4 +9,4 @@ const MemberInfo = () => {
     )
 }
 
-export default <MemberInfo />;
+export default MemberInfo;

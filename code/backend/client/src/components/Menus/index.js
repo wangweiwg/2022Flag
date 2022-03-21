@@ -10,13 +10,17 @@ import styles from './index.module.scss';
 
 class Menus extends React.Component {
 
+  handleMenuItemClick = (path) => {
+    console.log('点击了', path)
+  }
+
   render() {
     return (
       <Menu className={styles.menu} defaultSelectedKeys={['1']} mode="inline">
-        <Menu.Item key="1" icon={<PieChartOutlined />}>
-        店铺信息
+        <Menu.Item key="1" icon={<PieChartOutlined />} onClick={() => this.handleMenuItemClick('/store/info')}>
+          店铺信息
         </Menu.Item>
-        <Menu.Item key="2" icon={<DesktopOutlined />}>
+        <Menu.Item key="2" icon={<DesktopOutlined />} onClick={() => this.handleMenuItemClick('/members/info')}>
           会员信息
         </Menu.Item>
         {/* <SubMenu key="sub1" icon={<UserOutlined />} title="User">

@@ -1,13 +1,19 @@
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import style from './index.module.scss';
+import { login } from '../../service/index'
 
 const Login = () => {
-    const onFinish = (values) => {
-      console.log('Success:', values);
-    };
-  
-    const onFinishFailed = (errorInfo) => {
-      console.log('Failed:', errorInfo);
+    const navigation = new useNavigate();
+
+    const onFinish = async (values) => {
+    //   console.log('Success:', values);
+      const res = await login({
+          username: 'wangwei',
+          password: '123456'
+      })
+      console.log('res--login---', res)
+    //   navigation('/')
     };
   
     return (
@@ -15,8 +21,8 @@ const Login = () => {
             <Form
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
+                initialValues={{ username: 'wangwei', password: '123456' }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 className={style.loginForm}
             >

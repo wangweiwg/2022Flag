@@ -2,10 +2,10 @@ const path = require('path');
 const Koa = require('koa');
 const static = require('koa-static');
 const LogMiddleware = require('./src/middleware/log.middleware');
-const query = require('./src/utils/db');
+const getUserList = require('./src/controllers/user');
 
-query('SELECT * FROM test').then(res => {
-    console.log('获取到的所有数据---', res)
+getUserList().then(res => {
+    console.log('res--', res)
 })
 
 

@@ -5,7 +5,7 @@ const LogMiddleware = require('./src/middleware/log.middleware');
 const getUserList = require('./src/controllers/user');
 
 getUserList().then(res => {
-    console.log('res--', res)
+    console.log('用户列表信息--res--', res)
 })
 
 

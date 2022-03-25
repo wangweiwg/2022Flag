@@ -1,3 +1,6 @@
+/**
+ * 数据库操作
+ */
 const mysql = require('mysql');
 
 // 创建数据池
@@ -8,6 +11,7 @@ const pool  = mysql.createPool({
     database : 'wangwei'  // 选中数据库
 })
 
+// 操作数据库
 const query = (sql) => {
     return new Promise((resolve, reject) => {
         // 在数据池中进行会话操作
@@ -28,4 +32,6 @@ const query = (sql) => {
     })
 }
 
-module.exports = query;
+module.exports = {
+    query
+};

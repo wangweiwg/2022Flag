@@ -1,0 +1,35 @@
+店铺表 store
+id      自增id
+account
+password
+store_name      店名
+contact         联系人
+phone           联系人电话
+create_time     创建时间
+update_time     修改时间
+is_forbidden    是否禁用
+
+会员信息表 member
+id              自增
+name            会员名
+phone           会员电话
+charge_num      充值次数
+charge_amount   充值金额
+create_time     创建时间
+update_time     修改时间
+remark          备注信息
+
+
+会员消费记录表
+id              自增
+name            会员名字
+phone           会员电话
+amount          消费金额
+num             消费次数
+type            消费类型(1:男士剪发  2:男士烫发型 3:男士烫染  4:女士剪发 5:女士烫发 6:女士烫染 7:儿童剪发 8: 购买附加产品)
+pay_type        支付类型(1:现金 2:划卡 3:微信 4:支付宝)
+rest_amount     剩余金额
+create_time     消费时间
+remark          备注信息
+
+

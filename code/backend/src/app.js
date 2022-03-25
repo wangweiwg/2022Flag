@@ -1,16 +1,18 @@
 const path = require('path');
 const Koa = require('koa');
 const static = require('koa-static');
-const LogMiddleware = require('./src/middleware/log.middleware');
-const getUserList = require('./src/controllers/user');
+const LogMiddleware = require('./middleware/log.middleware');
+const createAllTables = require('./utils/initDB');
+const { getUserList } = require('./controllers/user');
 
 getUserList().then(res => {
     console.log('用户列表信息--res--', res)
 })
 
+// 初始化数据库
+// createAllTables()
 
 const port = 5000;
-
 const app = new Koa();
 
 // 静态资源目录对于相对入口文件index.js的路径

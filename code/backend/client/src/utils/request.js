@@ -15,7 +15,8 @@ const request = (options) => {
     
         // 创建实例
         const instance = axios.create({
-          url: `${baseUrl}${options.url}`,
+          baseURL: '/api',
+          url: `${options.url}`,
           headers: {
             'Content-Type': 'application/json',
           },
@@ -52,7 +53,7 @@ const request = (options) => {
           }
           
           // return { code: status, msg: statusText }
-          return { code: 200, msg: '成功' }
+          // return { code: 200, msg: '成功' }
         }, error => {
           message.error("服务异常");
           return Promise.reject(error);

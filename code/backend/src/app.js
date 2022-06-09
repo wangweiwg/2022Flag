@@ -5,9 +5,9 @@ const LogMiddleware = require('./middleware/log.middleware');
 const createAllTables = require('./utils/initDB');
 const { getUserList } = require('./controllers/user');
 
-getUserList().then(res => {
-    console.log('用户列表信息--res--', res)
-})
+// getUserList().then(res => {
+//     console.log('用户列表信息--res--', res)
+// })
 
 // 初始化数据库
 // createAllTables()

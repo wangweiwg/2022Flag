@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #heart {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        1、canvas坐标系原点在左上角
+        2、canvas是一个二维网格，原点在(0, 0)，所有元素的位置都相对于原点定位取正数
+        3、canvas只支持两种图形绘制，矩形和路径(有一系列的点组成的线段)
+        矩形方法：
+        fillRect: 绘制矩形
+        fillStyle: 填充色
+        strokeRect: 绘制矩形边框为当前的strokeStyle
+        clearRect: 通过把像素设置为透明，以达到擦除一个矩形区域的效果
+
+        路径：
+        1、创建路径起点，清空路径beginPath()
+        2、画出路径
+        3、闭合路径(可选)，绘制一条从当前点到起点的闭合路径
+        4、通过描边或填充路径区域来渲染图形, stroke()/fill()，调用stroke没有闭合的路径会自动闭合
+
+        笔触：
+        1、moveTo(), 移动笔触到某一点，设置起点，绘制一些不连贯的路径
+        
+        线
+        lineTo: 绘制一条从当前点到指定点的直线，当前位置由之前路径的结束点决定或者moveTo()决定
+
+        圆弧或圆
+        arc() 或者 arcTo()，两个方法的绘制思路是不一样的，我们通常选择 arc()，因为更可控。
+        arc(x, y, radius, startAngle, endAngle, anticlockwise);
+        绘制的过程：
+        * 以 (x,y) 为圆心
+        * 以 radius 为半径
+        * 从 startAngle 开始到 endAngle 结束(单位是弧度，而不是角度。弧度 = ( Math.PI / 180 ) * 角度)
+        * 按照给定的方向（ anticlockwise，默认为 false 顺时针）来生成。
+
+        矩形 rect
+        rect(x, y, width, height);
+        绘制一个左上角坐标为 (x,y)，宽高为 width 以及 height 的矩形
+        在该方法执行前，当前笔触自动重置回默认坐标，即 moveTo(0,0)；该方法结束后的笔触停留在矩形左上角 (x,y)。
+
+        贝塞尔曲线
+        二次及三次贝塞尔曲线，一般用来绘制复杂有规律的图形。
+
+        在线调试
+        二次贝塞尔曲线
+        http://blogs.sitepointstatic.com/examples/tech/canvas-curves/bezier-curve.html
+        三次贝塞尔曲线
+        http://blogs.sitepointstatic.com/examples/tech/canvas-curves/quadratic-curve.html
+
+        二次贝塞尔曲线
+        quadraticCurveTo(cp1x, cp1y, x, y)
+        绘制二次贝塞尔曲线，当前位置为开始点（蓝点），(cp1x,cp1y) 为一个控制点（红点），(x,y) 为结束点（蓝点）。
+
+        三次贝塞尔曲线
+        bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)
+        绘制三次贝塞尔曲线，当前位置为开始点（蓝点，）(cp1x,cp1y) 为控制点 1（红点），(cp2x,cp2y) 为控制点 2（红点），(x,y) 为结束点（蓝点）。
+     -->
+    <canvas id="heart" width="400px" height="400px"></canvas>
+    <script>
+        // 获取画布
+        const canvas = document.getElementById('heart')
+        if (canvas.getContext) {
+            // 获取上下文
+            const ctx = canvas.getContext('2d')
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#ff0000";
+            // 贝塞尔心形
+            // ctx.beginPath();
+            // ctx.moveTo(75, 40);
+            // ctx.bezierCurveTo(75, 37, 70, 25, 50, 25);
+            // ctx.bezierCurveTo(20, 25, 20, 62.5, 20, 62.5);
+            // ctx.bezierCurveTo(20, 80, 40, 102, 75, 120);
+            // ctx.bezierCurveTo(110, 102, 130, 80, 130, 62.5);
+            // ctx.bezierCurveTo(130, 62.5, 130, 25, 100, 25);
+            // ctx.bezierCurveTo(85, 25, 75, 37, 75, 40);
+            // ctx.fill();
+
+            // 坐标系
+            ctx.moveTo(200, 400)
+            ctx.lineTo(200, 0)
+            ctx.moveTo(0, 200)
+            ctx.lineTo(400, 200)
+            ctx.stroke()
+
+            // 正弦三角函数
+            // 三角函数
+            // 半径r  角度angle
+            const r = 200;
+            let angle = -45;
+            let points = []
+            // console.log('最大---', r * Math.sin(angle), r * Math.sin(Math.PI / 2))
+            while(angle <= 45) {
+                angle++
+                const x = r * Math.cos(Math.PI / 180 * angle)
+                const y = r - r * Math.sin(Math.PI / 180 * angle)
+                points.push([x, y])
+            }
+            points.forEach(([x, y]) => {
+                drawDot(x, y, 1);
+            });
+            function drawDot(x1, y1, r) {
+                ctx.save();
+                ctx.beginPath(); //不写会和线连起来
+                ctx.fillStyle = "red";
+                //绘制成矩形
+                ctx.arc(x1, y1, r, 0, 2 * Math.PI, false);
+                // arc(x, y, radius, startAngle, endAngle, anticlockwise);
+                ctx.fill();
+                ctx.restore();
+            }
+
+        }
+    </script>
+</body>
+</html>
